@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { take } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
+import * as fromStore from './../../../store';
 import { Pizza } from '../../models';
-import { PizzasService } from '../../services';
 
 @Component({
   selector: 'app-products',
@@ -10,15 +11,12 @@ import { PizzasService } from '../../services';
   styleUrls: ['./products.component.scss']
 })
 export class ProductsComponent implements OnInit {
-  pizzas: Pizza[];
+  pizzas$: Observable<Pizza[]>;
 
-  constructor(private pizzaService: PizzasService) {}
+  constructor(private store: Store<fromStore.ProductsState>) { }
 
   ngOnInit() {
-    this.pizzaService.getPizzas()
-      .pipe(take(1))
-      .subscribe((pizzas: Pizza[]) => {
-        this.pizzas = pizzas;
-      });
+    this.store.dispatch(new fromStore.LoadPizzas());
+    this.pizzas$ = this.store.select(fromStore.pizzasSelector);
   }
 }
