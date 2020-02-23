@@ -1,6 +1,6 @@
 <div class="product-item">
   <app-pizza-form
-    [pizza]="pizza"
+    [pizza]="pizza$ | async"
     [toppings]="toppings"
     (selected)="onSelect($event)"
     (create)="onCreate($event)"

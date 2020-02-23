@@ -4,18 +4,15 @@ import { NgModule } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
-import { StoreModule, MetaReducer } from '@ngrx/store';
+import { StoreModule } from '@ngrx/store';
+import { StoreRouterConnectingModule, RouterStateSerializer } from '@ngrx/router-store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { storeFreeze } from 'ngrx-store-freeze';
+import { reducers, CustomSerializer } from './+store/router';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { environment } from './../environments/environment';
-
-export const metaReducers: MetaReducer<any>[] = !environment.production
-  ? [storeFreeze]
-  : [];
 
 @NgModule({
   declarations: [
@@ -25,12 +22,18 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    StoreModule.forRoot({}, { metaReducers }),
+    StoreModule.forRoot(reducers, {
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true
+      }
+    }),
     EffectsModule.forRoot([]),
+    StoreRouterConnectingModule.forRoot(),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     AppRoutingModule
   ],
-  providers: [],
+  providers: [{ provide: RouterStateSerializer, useClass: CustomSerializer }],
   bootstrap: [AppComponent]
 })
 export class AppModule {
