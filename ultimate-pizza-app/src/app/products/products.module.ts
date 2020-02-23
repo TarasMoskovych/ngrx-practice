@@ -4,7 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { reducers, PizzasEffects } from './../store';
+import { reducers, PizzasEffects } from './../+store';
 
 import { ProductsRoutingModule } from './products-routing.module';
 import { ProductItemComponent, ProductsComponent } from './containers';
