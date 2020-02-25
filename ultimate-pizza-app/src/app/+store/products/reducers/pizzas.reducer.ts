@@ -14,7 +14,7 @@ export const initialState: PizzaState = {
   loading: false,
 };
 
-export function reducer(state = initialState, action: fromActions.PizzasAction): PizzaState {
+export function pizzasReducer(state = initialState, action: fromActions.PizzasAction): PizzaState {
   switch (action.type) {
     case fromActions.LOAD_PIZZAS: {
       return {
@@ -44,6 +44,25 @@ export function reducer(state = initialState, action: fromActions.PizzasAction):
         ...state,
         loading: false,
         loaded: false
+      };
+    }
+
+    case fromActions.CREATE_PIZZA_SUCCESS:
+    case fromActions.UPDATE_PIZZA_SUCCESS: {
+      const entities = { ...state.entities, [action.payload.id]: action.payload };
+
+      return {
+        ...state,
+        entities
+      };
+    }
+
+    case fromActions.REMOVE_PIZZA_SUCCESS: {
+      const { [action.payload.id]: current, ...entities } = state.entities;
+
+      return {
+        ...state,
+        entities
       };
     }
 

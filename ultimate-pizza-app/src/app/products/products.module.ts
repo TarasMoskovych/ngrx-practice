@@ -4,7 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { reducers, PizzasEffects } from './../+store';
+import { reducers, productsEffects } from './../+store';
 
 import { ProductsRoutingModule } from './products-routing.module';
 import { ProductItemComponent, ProductsComponent } from './containers';
@@ -16,7 +16,7 @@ import { PizzaDisplayComponent, PizzaFormComponent, PizzaItemComponent, PizzaTop
     ReactiveFormsModule,
     ProductsRoutingModule,
     StoreModule.forFeature('products', reducers),
-    EffectsModule.forFeature([PizzasEffects]),
+    EffectsModule.forFeature(productsEffects),
   ],
   declarations: [
     ProductItemComponent,

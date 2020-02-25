@@ -20,5 +20,80 @@ export class LoadPizzasFail implements Action {
   constructor(public payload: any) { }
 }
 
+// create pizza
+export const CREATE_PIZZA = '[Products] Create Pizza';
+export const CREATE_PIZZA_SUCCESS = '[Products] Create Pizza Success';
+export const CREATE_PIZZA_FAIL = '[Products] Create Pizza Fail';
+
+export class CreatePizza implements Action {
+  readonly type = CREATE_PIZZA;
+  constructor(public payload: Pizza) { }
+}
+
+export class CreatePizzaSuccess implements Action {
+  readonly type = CREATE_PIZZA_SUCCESS;
+  constructor(public payload: Pizza) { }
+}
+
+export class CreatePizzaFail implements Action {
+  readonly type = CREATE_PIZZA_FAIL;
+  constructor(public payload: any) { }
+}
+
+// update pizza
+export const UPDATE_PIZZA = '[Products] Update Pizza';
+export const UPDATE_PIZZA_SUCCESS = '[Products] Update Pizza Success';
+export const UPDATE_PIZZA_FAIL = '[Products] Update Pizza Fail';
+
+export class UpdatePizza implements Action {
+  readonly type = UPDATE_PIZZA;
+  constructor(public payload: Pizza) { }
+}
+
+export class UpdatePizzaSuccess implements Action {
+  readonly type = UPDATE_PIZZA_SUCCESS;
+  constructor(public payload: Pizza) { }
+}
+
+export class UpdatePizzaFail implements Action {
+  readonly type = UPDATE_PIZZA_FAIL;
+  constructor(public payload: any) { }
+}
+
+// remove pizza
+export const REMOVE_PIZZA = '[Products] Remove Pizza';
+export const REMOVE_PIZZA_SUCCESS = '[Products] Remove Pizza Success';
+export const REMOVE_PIZZA_FAIL = '[Products] Remove Pizza Fail';
+
+export class RemovePizza implements Action {
+  readonly type = REMOVE_PIZZA;
+  constructor(public payload: Pizza) { }
+}
+
+export class RemovePizzaSuccess implements Action {
+  readonly type = REMOVE_PIZZA_SUCCESS;
+  constructor(public payload: Pizza) { }
+}
+
+export class RemovePizzaFail implements Action {
+  readonly type = REMOVE_PIZZA_FAIL;
+  constructor(public payload: any) { }
+}
+
 // action types
-export type PizzasAction = LoadPizzas | LoadPizzasSuccess | LoadPizzasFail;
+export type PizzasAction =
+  | LoadPizzas
+  | LoadPizzasSuccess
+  | LoadPizzasFail
+
+  | CreatePizza
+  | CreatePizzaSuccess
+  | CreatePizzaFail
+
+  | UpdatePizza
+  | UpdatePizzaSuccess
+  | UpdatePizzaFail
+
+  | RemovePizza
+  | RemovePizzaSuccess
+  | RemovePizzaFail;
