@@ -8,7 +8,7 @@ import { StoreModule } from '@ngrx/store';
 import { StoreRouterConnectingModule, RouterStateSerializer } from '@ngrx/router-store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { reducers, CustomSerializer } from './+store/router';
+import { reducers, CustomSerializer, RouterEffects } from './+store/router';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -28,7 +28,7 @@ import { environment } from './../environments/environment';
         strictActionImmutability: true
       }
     }),
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([RouterEffects]),
     StoreRouterConnectingModule.forRoot(),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     AppRoutingModule

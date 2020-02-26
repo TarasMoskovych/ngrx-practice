@@ -5,6 +5,8 @@ import { map, switchMap, catchError, pluck } from 'rxjs/operators';
 import { of } from 'rxjs';
 
 import * as pizzaActions from './../actions/pizzas.action';
+import * as routerActions from './../../router/actions';
+
 import { PizzasService } from 'src/app/products/services';
 import { Pizza } from 'src/app/products/models';
 
@@ -39,6 +41,13 @@ export class PizzasEffects {
   );
 
   @Effect()
+  createPizzaSuccess$ = this.actions.pipe(
+    ofType(pizzaActions.CREATE_PIZZA_SUCCESS),
+    pluck('payload'),
+    map((pizza: Pizza) => new routerActions.Go({ path: ['/products', pizza.id] }))
+  );
+
+  @Effect()
   updatePizza$ = this.actions.pipe(
     ofType(pizzaActions.UPDATE_PIZZA),
     pluck('payload'),
@@ -60,5 +69,14 @@ export class PizzasEffects {
         catchError(error => of(new pizzaActions.RemovePizzaFail(error)))
       )
     })
+  );
+
+  @Effect()
+  removeUpdatePizzaSuccess$ = this.actions.pipe(
+    ofType(
+      pizzaActions.REMOVE_PIZZA_SUCCESS,
+      pizzaActions.UPDATE_PIZZA_SUCCESS
+    ),
+    map(() => new routerActions.Go({ path: ['/products'] }))
   );
 }
