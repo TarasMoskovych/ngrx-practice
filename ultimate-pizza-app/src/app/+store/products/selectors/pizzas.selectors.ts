@@ -1,5 +1,7 @@
 import { createSelector } from '@ngrx/store';
-import { getRouterState } from './../../router';
+import { RouterReducerState } from '@ngrx/router-store';
+
+import { getRouterState, RouterStateUrl } from './../../router';
 import { ProductsState, PizzaEntity, getProductsState, ToppingEntity } from '../reducers';
 import { getPizzaEntities, getPizzasLoading, getPizzasLoaded } from '../reducers/pizzas.reducer';
 import { toppingEntitiesSelector, selectedToppingsSelector } from './toppings.selectors';
@@ -15,7 +17,7 @@ export const pizzasSelector = createSelector(
 export const selectedPizzaSelector = createSelector(
   pizzaEntitiesSelector,
   getRouterState,
-  (entities: PizzaEntity, router): Pizza => {
+  (entities: PizzaEntity, router: RouterReducerState<RouterStateUrl>): Pizza => {
     return router.state && entities[router.state.params.productId];
   }
 );

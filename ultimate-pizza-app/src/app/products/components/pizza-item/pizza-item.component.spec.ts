@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { PizzaItemComponent } from './pizza-item.component';
 
@@ -8,7 +9,8 @@ describe('PizzaItemComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PizzaItemComponent ]
+      declarations: [ PizzaItemComponent ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
     .compileComponents();
   }));
@@ -16,6 +18,7 @@ describe('PizzaItemComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(PizzaItemComponent);
     component = fixture.componentInstance;
+    component.pizza = { id: 1 };
     fixture.detectChanges();
   });
 
