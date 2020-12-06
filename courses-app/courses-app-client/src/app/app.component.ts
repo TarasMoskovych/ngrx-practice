@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+
+import { isLoggedIn, isLoggedOut, login, logout } from './auth/+store';
+import { AppState } from './reducers';
 
 @Component({
   selector: 'app-root',
@@ -8,10 +13,17 @@ import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Rout
 })
 export class AppComponent implements OnInit {
   loading = true;
+  isLoggedIn$: Observable<boolean> = this.store.select(isLoggedIn);
+  isLoggedOut$: Observable<boolean> = this.store.select(isLoggedOut);
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private store: Store<AppState>,
+  ) {}
 
   ngOnInit() {
+    this.getUser();
+
     this.router.events.subscribe(event => {
       switch (true) {
         case event instanceof NavigationStart: {
@@ -31,5 +43,12 @@ export class AppComponent implements OnInit {
     });
   }
 
-  logout() {}
+  logout() {
+    this.store.dispatch(logout());
+  }
+
+  private getUser() {
+    const user = localStorage.getItem('user');
+    user && this.store.dispatch(login({ user: JSON.parse(user) }));
+  }
 }

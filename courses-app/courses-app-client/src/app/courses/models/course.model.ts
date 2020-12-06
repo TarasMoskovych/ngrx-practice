@@ -6,11 +6,16 @@ export interface Course {
   courseListIcon: string;
   description: string;
   longDescription?: string;
-  category: string;
+  category: Category;
   lessonsCount: number;
   promo: boolean;
 }
 
+export enum Category {
+  ADVANCED = 'ADVANCED',
+  BEGINNER = 'BEGINNER',
+  INTERMEDIATE = 'INTERMEDIATE',
+}
 
 export function compareCourses(c1: Course, c2: Course) {
   const compare = c1.seqNo - c2.seqNo;

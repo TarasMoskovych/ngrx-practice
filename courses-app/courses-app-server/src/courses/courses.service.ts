@@ -17,14 +17,28 @@ export class CoursesService {
 
   create(payload: Course): Course {
     const id = this.counter;
-    const course: Course = { ...payload, id, seqNo: id };
+    const course: Course = { ...payload, id, seqNo: id, iconUrl: this.checkIconUrl(payload.iconUrl) };
     COURSES[course.id] = course;
     this.counter++;
     return course;
   }
 
   update(id: string, payload: Course): Course {
-    COURSES[id] = { ...COURSES[id], ...payload };
+    COURSES[id] = { ...COURSES[id], ...payload, iconUrl: this.checkIconUrl(payload.iconUrl) };
     return COURSES[id];
+  }
+
+  delete(id: string): Course {
+    const course = COURSES[id];
+    delete COURSES[id];
+    return course;
+  }
+
+  private checkIconUrl(src: string): string {
+    if (!src.match(/(https?:\/\/[^\s]+)/g)) {
+      src = 'https://akm-img-a-in.tosshub.com/indiatoday/images/bodyeditor/201811/online-3412498_1920-770x1280.jpg?Q.PE.jaSjTnNR5DSGBmjgkI4_R1cCOCO';
+    }
+
+    return src;
   }
 }

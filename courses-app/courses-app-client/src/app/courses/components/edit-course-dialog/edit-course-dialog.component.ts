@@ -1,15 +1,20 @@
-import { Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
-import { Course } from '../../models';
 
-import { CoursesService } from '../../services';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/reducers';
+import { courseAdded, courseUpdated } from '../../+store';
+import { CourseEntityService } from '../../services/course-entity.service';
+
+import { Course } from '../../models';
 
 @Component({
   selector: 'course-dialog',
   templateUrl: './edit-course-dialog.component.html',
-  styleUrls: ['./edit-course-dialog.component.scss']
+  styleUrls: ['./edit-course-dialog.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditCourseDialogComponent {
   form: FormGroup;
@@ -22,7 +27,9 @@ export class EditCourseDialogComponent {
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<EditCourseDialogComponent>,
     @Inject(MAT_DIALOG_DATA) data,
-    private coursesService: CoursesService) {
+    private store: Store<AppState>,
+    private courseService: CourseEntityService,
+  ) {
 
     this.dialogTitle = data.dialogTitle;
     this.course = data.course;
@@ -38,8 +45,7 @@ export class EditCourseDialogComponent {
     if (this.mode == 'update') {
       this.form = this.fb.group(formControls);
       this.form.patchValue({ ...data.course });
-    }
-    else if (this.mode == 'create') {
+    } else if (this.mode == 'create') {
       this.form = this.fb.group({
         ...formControls,
         url: ['', Validators.required],
@@ -58,9 +64,11 @@ export class EditCourseDialogComponent {
       ...this.form.value
     };
 
-    this.coursesService.saveCourse(course.id, course)
-      .subscribe(
-        () => this.dialogRef.close()
-      );
+    // this.store.dispatch(course.id
+    //   ? courseUpdated({ update: { id: course.id, changes: course } })
+    //   : courseAdded({ course }));
+
+    this.courseService[course.id ? 'update' : 'add'](course);
+    this.dialogRef.close();
   }
 }

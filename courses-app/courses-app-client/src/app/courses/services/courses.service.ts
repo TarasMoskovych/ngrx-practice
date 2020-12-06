@@ -30,10 +30,14 @@ export class CoursesService {
     });
   }
 
-  saveCourse(courseId: number | string, changes: Partial<Course>) {
+  saveCourse(courseId: number | string, changes: Partial<Course>): Observable<Course> {
     if (courseId) {
-      return this.http.put('/api/courses/' + courseId, changes);
+      return this.http.put<Course>('/api/courses/' + courseId, changes);
     }
-    return this.http.post('/api/courses', changes);
+    return this.http.post<Course>('/api/courses', changes);
+  }
+
+  deleteCourse(course: Course): Observable<Course> {
+    return this.http.delete<Course>('/api/courses/' + course.id);
   }
 }
