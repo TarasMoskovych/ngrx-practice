@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 
 import { Course } from './course.model';
 import { CoursesService } from './courses.service';
@@ -26,5 +26,10 @@ export class CoursesController {
   @Post()
   create(@Body() course: Course): Course {
     return this.coursesService.create(course);
+  }
+
+  @Delete(':id')
+  delete(@Param('id') id: string): Course {
+    return this.coursesService.delete(id);
   }
 }
