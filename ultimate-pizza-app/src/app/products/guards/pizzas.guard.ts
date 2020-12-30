@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate, UrlTree } from '@angular/router';
 
 import { Observable, of } from 'rxjs';
-import { tap, switchMap, catchError } from 'rxjs/operators';
+import { switchMap, catchError } from 'rxjs/operators';
 import { AbstractPizzasGuard } from './abstract-pizzas.guard';
 
 @Injectable({

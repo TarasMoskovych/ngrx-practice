@@ -1,4 +1,5 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Pizza } from '../../models';
 
 @Component({
   selector: 'app-pizza-item',
@@ -7,5 +8,5 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PizzaItemComponent {
-  @Input() pizza: any;
+  @Input() pizza: Pizza;
 }

@@ -26,18 +26,16 @@ import { CourseEntityService } from './course-entity.service';
 
 export class CoursesResolver implements Resolve<boolean> {
 
-  constructor(
-    private store: Store<AppState>,
-    private coursesService: CourseEntityService,
-  ) {}
+  constructor(private coursesService: CourseEntityService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     return this.coursesService.loaded$
       .pipe(
         tap((loaded: boolean) => {
           if (!loaded) {
-            this.coursesService.getAll()
-            .pipe(map((courses: Course[]) => !!courses.length));
+            this.coursesService
+              .getAll()
+              .pipe(map((courses: Course[]) => !!courses.length));
           }
         }),
         filter((loaded: boolean) => !!loaded),
