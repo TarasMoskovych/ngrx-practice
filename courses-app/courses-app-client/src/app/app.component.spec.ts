@@ -52,6 +52,16 @@ describe('AppComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should dispatch login', () => {
+    spyOn(localStorage, 'getItem').and.returnValue(JSON.stringify(user));
+    spyOn(store, 'dispatch');
+
+    component['getUser']();
+    expect(localStorage.getItem).toHaveBeenCalled();
+    expect(store.dispatch).toHaveBeenCalledTimes(1);
+    expect(store.dispatch).toHaveBeenCalledWith(login({ user }));
+  });
+
   describe('sidenav actions', () => {
     it('should open sidenav when click on menu', () => {
       const btn = el.query(By.css('.menu-button'));

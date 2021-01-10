@@ -12,7 +12,7 @@ import { PizzaFormComponent } from './pizza-form.component';
     <app-pizza-form
       [pizza]="pizza"
       [toppings]="toppings"
-      (select)="onSelected($event)"
+      (selected)="onSelected($event)"
       (create)="onCreate($event)"
       (update)="onUpdate($event)"
       (remove)="onRemove($event)"
@@ -138,5 +138,14 @@ describe('PizzaFormHostComponent', () => {
     expect(component.onRemove).toHaveBeenCalledTimes(1);
     expect(component.onRemove).toHaveBeenCalledWith(pizzas[0]);
     expect(actionBtn.nativeElement.textContent.trim()).toBe('Delete Pizza');
+  });
+
+  it('should emit "select"', () => {
+    spyOn(component, 'onSelected');
+
+    fixture.detectChanges();
+    el.query(By.css('.pizza-toppings-item')).triggerEventHandler('click', null);
+
+    expect(component.onSelected).toHaveBeenCalled();
   });
 });

@@ -31,13 +31,7 @@ export class CoursesResolver implements Resolve<boolean> {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     return this.coursesService.loaded$
       .pipe(
-        tap((loaded: boolean) => {
-          if (!loaded) {
-            this.coursesService
-              .getAll()
-              .pipe(map((courses: Course[]) => !!courses.length));
-          }
-        }),
+        tap((loaded: boolean) => !loaded && this.coursesService.getAll()),
         filter((loaded: boolean) => !!loaded),
         take(1),
       )

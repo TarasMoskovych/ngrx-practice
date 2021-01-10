@@ -135,6 +135,7 @@ describe('EditCourseDialogComponent', () => {
     Object.keys(component.form.controls).forEach((control: string) => {
       expect(component.form.controls[control].value).toBeFalsy();
     });
+    expect(Object.keys(component.form.value).length).toBe(6);
   });
 
   it('should have patched controls when mode is "update"', () => {
@@ -146,5 +147,11 @@ describe('EditCourseDialogComponent', () => {
         expect(component.form.controls[key].value).toBe(course[key]);
       }
     });
+    expect(Object.keys(component.form.value).length).toBe(4);
+  });
+
+  it('should not create form when mode is not specified', () => {
+    overrideDialogData(null);
+    expect(component.form).toBeUndefined();
   });
 });
